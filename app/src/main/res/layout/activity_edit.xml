@@ -71,7 +71,6 @@
             android:layout_marginEnd="8dp"
             android:text="Сохранить"
             android:textStyle="bold"
-            android:background="#4CAF50"
             android:textColor="#FFFFFF"/>
 
         <Button
@@ -80,7 +79,6 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:text="Удалить"
-            android:background="#F44336"
             android:textColor="#FFFFFF"/>
 
     </LinearLayout>
