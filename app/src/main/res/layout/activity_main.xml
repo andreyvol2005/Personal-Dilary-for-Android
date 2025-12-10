@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".MainActivity">
+
+    <!-- Верхняя панель с кнопками навигации -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#2196F3"
+        android:padding="8dp"
+        android:layout_marginBottom="12dp">
+
+        <Button
+            android:id="@+id/btnDates"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="📅 Дневник"
+            android:textStyle="bold"
+            android:background="#FFFFFF"
+            android:textColor="#2196F3"/>
+
+        <Button
+            android:id="@+id/btnNotes"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="📝 Заметки"
+            android:background="#64B5F6"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <!-- Информация о коллекции -->
+    <TextView
+        android:id="@+id/tvCollectionInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Дневник (dates)"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="#F5F5F5"
+        android:padding="8dp"/>
+
+    <!-- Кнопка создания новой заметки -->
+    <Button
+        android:id="@+id/btnNew"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:text="➕ Новая заметка"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="#4CAF50"
+        android:textColor="#FFFFFF"/>
+
+    <!-- Список заметок -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Список заметок:"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"
+        android:textSize="16sp"/>
+
+    <ListView
+        android:id="@+id/listViewEntries"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FAFAFA"
+        android:divider="#E0E0E0"
+        android:dividerHeight="1dp"
+        android:choiceMode="singleChoice"/>
+
+</LinearLayout>

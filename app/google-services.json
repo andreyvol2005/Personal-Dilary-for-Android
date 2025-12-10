@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "102018578310",
+    "firebase_url": "https://diary-ae3ea-default-rtdb.firebaseio.com",
+    "project_id": "diary-ae3ea",
+    "storage_bucket": "diary-ae3ea.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102018578310:android:bc83996e5be06bcbdade07",
+        "android_client_info": {
+          "package_name": "com.example.personaldiary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM0GAh944P6b6EHYmEhWrT_RWBpHj5NL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
