@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#2196F3"
         android:padding="8dp"
         android:layout_marginBottom="12dp">
 
@@ -24,7 +23,6 @@
             android:layout_marginEnd="4dp"
             android:text="📅 Дневник"
             android:textStyle="bold"
-            android:background="#FFFFFF"
             android:textColor="#2196F3"/>
 
         <Button
@@ -34,7 +32,6 @@
             android:layout_weight="1"
             android:layout_marginStart="4dp"
             android:text="📝 Заметки"
-            android:background="#64B5F6"
             android:textColor="#FFFFFF"/>
 
     </LinearLayout>
@@ -61,7 +58,6 @@
         android:text="➕ Новая заметка"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:background="#4CAF50"
         android:textColor="#FFFFFF"/>
 
     <!-- Список заметок -->
