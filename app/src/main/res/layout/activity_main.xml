@@ -9,128 +9,90 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- Верхняя панель с Material Design 3 -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/topAppBarCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        app:cardBackgroundColor="#1E1E1E"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Верхняя панель с Material Design 3 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/topAppBarCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardCornerRadius="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDates"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="4dp"
-                android:text="📅 Дневник"
-                android:textColor="#BB86FC"
-                android:theme="@style/Theme.Material3.Dark.NoActionBar"
-                app:backgroundTint="#2D2D2D"
-                app:cornerRadius="12dp"
-                app:icon="@drawable/ic_calendar"
-                app:iconTint="#BB86FC"
-                style="@style/Widget.Material3.Button.TonalButton" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="13dp"
+                android:gravity="center">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNotes"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:layout_marginStart="4dp"
-                android:text="📝 Заметки"
-                android:textColor="#FFFFFF"
-                android:theme="@style/Theme.Material3.Dark.NoActionBar"
-                app:cornerRadius="15dp"
-                app:icon="@drawable/ic_note"
-                app:iconTint="#FFFFFF"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDates"
+                    android:layout_width="165dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Дневник"
+                    android:textColor="#BB86FC"
+                    app:backgroundTint="#2D2D2D"
+                    app:cornerRadius="12dp"
+                    style="@style/Widget.Material3.Button.OutlinedButton" />
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNotes"
+                    android:layout_width="165dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:text="Заметки"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#03DAC5"
+                    app:cornerRadius="12dp"
+                    style="@style/Widget.Material3.Button.OutlinedButton" />
 
-    <!-- Заголовок коллекции -->
-    <TextView
-        android:id="@+id/tvCollectionInfo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Дневник"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="start"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topAppBarCard" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <!-- Кнопка новой заметки -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btnNew"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
-        android:layout_marginBottom="24dp"
-        android:text="Новая заметка"
-        android:textColor="#FFFFFF"
-        app:backgroundTint="#BB86FC"
-        app:icon="@drawable/ic_add"
-        app:iconTint="#FFFFFF"
-        app:cornerRadius="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCollectionInfo" />
-
-    <!-- Карточка для списка -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="#1E1E1E"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNew">
-
-        <LinearLayout
+        <!-- Карточка для списка -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp">
 
-            <TextView
+                <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Список заметок"
-                android:textColor="#E0E0E0"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp"
-                android:drawablePadding="8dp"
-                android:drawableTint="#BB86FC"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Современный RecyclerView вместо ListView -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewEntries"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:paddingTop="4dp"
-                android:paddingBottom="8dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Список заметок"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"
+                        android:drawableTint="#BB86FC"/>
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                    <!-- Современный RecyclerView вместо ListView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewEntries"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="8dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
