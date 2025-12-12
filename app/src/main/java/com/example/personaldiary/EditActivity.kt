@@ -30,7 +30,6 @@ class EditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit)
 
         // Находим элементы
-        tvTitle = findViewById(R.id.tvTitle)
         etNoteName = findViewById(R.id.etNoteName)
         etMessage = findViewById(R.id.etMessage)
         btnSave = findViewById(R.id.btnSave)
@@ -44,14 +43,12 @@ class EditActivity : AppCompatActivity() {
 
         if (isNew) {
             // Новая заметка
-            tvTitle.text = "Создание новой заметки"
             etNoteName.setText("")
             etMessage.setText("")
             btnDelete.isEnabled = false
             btnDelete.alpha = 0.5f
         } else {
             // Редактирование существующей заметки
-            tvTitle.text = "Редактирование заметки"
             firebaseKey = intent.getStringExtra("key") ?: ""
             originalDisplayName = intent.getStringExtra("displayName") ?: ""
             val text = intent.getStringExtra("text") ?: ""

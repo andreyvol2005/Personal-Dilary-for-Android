@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,19 +14,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnDates: Button
     private lateinit var btnNotes: Button
     private lateinit var btnNew: Button
-    private lateinit var listViewEntries: ListView
-    private lateinit var tvCollectionInfo: TextView
+    private lateinit var recyclerViewEntries: RecyclerView
 
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseRef: DatabaseReference
 
     private val FIREBASE_URL = "https://diary-ae3ea-default-rtdb.firebaseio.com/"
-    private val entries = mutableMapOf<String, String>() // key -> text
+    private val entries = mutableMapOf<String, Entry>() // key -> Entry object
     private var currentCollection = "dates" // текущая коллекция
 
-    private lateinit var entriesAdapter: ArrayAdapter<String>
+    private lateinit var entriesAdapter: EntriesAdapter
 
-    @SuppressLint("MissingInflatedId")
+    // Класс для хранения данных о записи
+    data class Entry(
+        val key: String,
+        val displayName: String,
+        val text: String
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,21 +40,17 @@ class MainActivity : AppCompatActivity() {
         btnDates = findViewById(R.id.btnDates)
         btnNotes = findViewById(R.id.btnNotes)
         btnNew = findViewById(R.id.btnNew)
-        listViewEntries = findViewById(R.id.listViewEntries)
-        tvCollectionInfo = findViewById(R.id.tvCollectionInfo)
+        recyclerViewEntries = findViewById(R.id.recyclerViewEntries)
 
-        // Инициализация адаптера
-        entriesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
-        listViewEntries.adapter = entriesAdapter
+        // Настройка RecyclerView
+        recyclerViewEntries.layoutManager = LinearLayoutManager(this)
+        entriesAdapter = EntriesAdapter { position -> openEditActivity(position) }
+        recyclerViewEntries.adapter = entriesAdapter
 
         // Назначаем обработчики
         btnDates.setOnClickListener { switchToDates() }
         btnNotes.setOnClickListener { switchToNotes() }
         btnNew.setOnClickListener { createNewEntry() }
-
-        listViewEntries.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            openEditActivity(position)
-        }
 
         // Автоматическое подключение к Firebase
         database = FirebaseDatabase.getInstance(FIREBASE_URL)
@@ -55,14 +58,12 @@ class MainActivity : AppCompatActivity() {
 
         // Загружаем заметки при запуске (по умолчанию dates)
         loadEntries()
-        highlightDatesButton()
     }
 
     private fun switchToDates() {
         if (currentCollection != "dates") {
             currentCollection = "dates"
             loadEntries()
-            highlightDatesButton()
         }
     }
 
@@ -70,35 +71,14 @@ class MainActivity : AppCompatActivity() {
         if (currentCollection != "notes") {
             currentCollection = "notes"
             loadEntries()
-            highlightNotesButton()
         }
-    }
-
-    private fun highlightDatesButton() {
-        btnDates.setBackgroundColor(getColor(android.R.color.white))
-        btnDates.setTextColor(getColor(R.color.colorPrimary))
-        btnDates.text = "📅 Дневник (активно)"
-
-        btnNotes.setBackgroundColor(getColor(R.color.colorPrimaryLight))
-        btnNotes.setTextColor(getColor(android.R.color.white))
-        btnNotes.text = "📝 Заметки"
-    }
-
-    private fun highlightNotesButton() {
-        btnNotes.setBackgroundColor(getColor(android.R.color.white))
-        btnNotes.setTextColor(getColor(R.color.colorPrimary))
-        btnNotes.text = "📝 Заметки (активно)"
-
-        btnDates.setBackgroundColor(getColor(R.color.colorPrimaryLight))
-        btnDates.setTextColor(getColor(android.R.color.white))
-        btnDates.text = "📅 Дневник"
     }
 
     private fun loadEntries() {
         databaseRef.child(currentCollection).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 entries.clear()
-                entriesAdapter.clear()
+                val entryList = mutableListOf<Entry>()
 
                 for (entry in snapshot.children) {
                     val entryKey = entry.key ?: continue
@@ -107,20 +87,22 @@ class MainActivity : AppCompatActivity() {
                     // Очищаем JSON строку
                     val cleanedText = cleanJsonString(entryText)
 
-                    entries[entryKey] = cleanedText
-
-                    // Отображаем красивое имя (без _)
+                    // Создаем отображаемое имя
                     val displayName = entryKey.replace("_", " ")
-                    entriesAdapter.add(displayName)
+
+                    val entryObject = Entry(entryKey, displayName, cleanedText)
+                    entries[entryKey] = entryObject
+                    entryList.add(entryObject)
                 }
 
                 // Сортируем по алфавиту
-                entriesAdapter.sort { o1, o2 -> o1.compareTo(o2, true) }
+                entryList.sortBy { it.displayName }
 
-                updateCollectionInfo()
+                // Обновляем адаптер
+                entriesAdapter.submitList(entryList)
 
                 // Отображаем подсказку если нет заметок
-                if (entriesAdapter.isEmpty) {
+                if (entryList.isEmpty()) {
                     runOnUiThread {
                         Toast.makeText(this@MainActivity,
                             "Нет заметок. Нажмите 'Новая заметка' для создания.",
@@ -155,40 +137,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openEditActivity(position: Int) {
-        if (position >= 0 && position < entriesAdapter.count) {
-            val displayName = entriesAdapter.getItem(position) ?: ""
+        val entryList = entriesAdapter.currentList
+        if (position in entryList.indices) {
+            val entry = entryList[position]
 
-            // Находим реальный ключ в Firebase
-            val firebaseKey = findFirebaseKeyByDisplayName(displayName)
-
-            if (firebaseKey != null) {
-                val intent = Intent(this, EditActivity::class.java)
-                intent.putExtra("collection", currentCollection)
-                intent.putExtra("key", firebaseKey)
-                intent.putExtra("displayName", displayName)
-                intent.putExtra("text", entries[firebaseKey] ?: "")
-                intent.putExtra("isNew", false)
-                startActivityForResult(intent, 1)
-            }
+            val intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("collection", currentCollection)
+            intent.putExtra("key", entry.key)
+            intent.putExtra("displayName", entry.displayName)
+            intent.putExtra("text", entry.text)
+            intent.putExtra("isNew", false)
+            startActivityForResult(intent, 1)
         }
-    }
-
-    private fun findFirebaseKeyByDisplayName(displayName: String): String? {
-        val firebaseKey = displayName.replace(" ", "_")
-
-        // Ищем точное совпадение
-        if (entries.containsKey(firebaseKey)) {
-            return firebaseKey
-        }
-
-        // Ищем похожие ключи
-        for (key in entries.keys) {
-            if (key.replace("_", " ") == displayName) {
-                return key
-            }
-        }
-
-        return null
     }
 
     private fun createNewEntry() {
@@ -204,11 +164,5 @@ class MainActivity : AppCompatActivity() {
             // Обновляем список после возврата из EditActivity
             loadEntries()
         }
-    }
-
-    private fun updateCollectionInfo() {
-        val count = entriesAdapter.count
-        val collectionName = if (currentCollection == "dates") "Дневник (dates)" else "Заметки (notes)"
-        tvCollectionInfo.text = "$collectionName: $count заметок"
     }
 }

@@ -1,82 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp"
-    tools:context=".MainActivity">
+    android:background="#121212"
+    tools:context=".MainActivity"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp">
 
-    <!-- Верхняя панель с кнопками навигации -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:layout_marginBottom="12dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <Button
-            android:id="@+id/btnDates"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:text="📅 Дневник"
-            android:textStyle="bold"
-            android:textColor="#2196F3"/>
+        <!-- Верхняя панель с Material Design 3 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/topAppBarCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardCornerRadius="16dp">
 
-        <Button
-            android:id="@+id/btnNotes"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:text="📝 Заметки"
-            android:textColor="#FFFFFF"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="13dp"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDates"
+                    android:layout_width="165dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Дневник"
+                    android:textColor="#BB86FC"
+                    app:backgroundTint="#2D2D2D"
+                    app:cornerRadius="12dp"
+                    style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNotes"
+                    android:layout_width="165dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:text="Заметки"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#03DAC5"
+                    app:cornerRadius="12dp"
+                    style="@style/Widget.Material3.Button.OutlinedButton" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNew"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Создать новую запись"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#03DAC5"
+            app:cornerRadius="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+        <!-- Карточка для списка -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp">
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Список заметок"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"
+                        android:drawableTint="#BB86FC"/>
+
+                    <!-- Современный RecyclerView вместо ListView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewEntries"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="8dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
-    <!-- Информация о коллекции -->
-    <TextView
-        android:id="@+id/tvCollectionInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Дневник (dates)"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:background="#F5F5F5"
-        android:padding="8dp"/>
-
-    <!-- Кнопка создания новой заметки -->
-    <Button
-        android:id="@+id/btnNew"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:text="➕ Новая заметка"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"/>
-
-    <!-- Список заметок -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Список заметок:"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp"
-        android:textSize="16sp"/>
-
-    <ListView
-        android:id="@+id/listViewEntries"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FAFAFA"
-        android:divider="#E0E0E0"
-        android:dividerHeight="1dp"
-        android:choiceMode="singleChoice"/>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
