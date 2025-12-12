@@ -19,7 +19,6 @@
             android:id="@+id/topAppBarCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             app:cardBackgroundColor="#1E1E1E"
             app:cardCornerRadius="16dp">
 
@@ -54,6 +53,19 @@
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNew"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Создать новую запись"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#03DAC5"
+            app:cornerRadius="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
 
         <!-- Карточка для списка -->
         <com.google.android.material.card.MaterialCardView

@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
         btnDates = findViewById(R.id.btnDates)
         btnNotes = findViewById(R.id.btnNotes)
         btnNew = findViewById(R.id.btnNew)
-        listViewEntries = findViewById(R.id.listViewEntries)
-        tvCollectionInfo = findViewById(R.id.tvCollectionInfo)
+        listViewEntries = findViewById(R.id.recyclerViewEntries)
 
         // Инициализация адаптера
         entriesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
@@ -116,8 +115,6 @@ class MainActivity : AppCompatActivity() {
 
                 // Сортируем по алфавиту
                 entriesAdapter.sort { o1, o2 -> o1.compareTo(o2, true) }
-
-                updateCollectionInfo()
 
                 // Отображаем подсказку если нет заметок
                 if (entriesAdapter.isEmpty) {
@@ -204,11 +201,5 @@ class MainActivity : AppCompatActivity() {
             // Обновляем список после возврата из EditActivity
             loadEntries()
         }
-    }
-
-    private fun updateCollectionInfo() {
-        val count = entriesAdapter.count
-        val collectionName = if (currentCollection == "dates") "Дневник (dates)" else "Заметки (notes)"
-        tvCollectionInfo.text = "$collectionName: $count заметок"
     }
 }
