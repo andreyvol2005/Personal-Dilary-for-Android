@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#121212"
-    tools:context=".EditActivity">
+    tools:context=".EditActivity"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp">
 
     <!-- Карточка для полей ввода -->
     <com.google.android.material.card.MaterialCardView
@@ -67,7 +69,7 @@
                     android:id="@+id/tilMessage"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
+                    android:layout_height="460dp"
                     android:hint="Текст заметки"
                     app:boxBackgroundColor="#2D2D2D"
                     app:boxStrokeColor="#BB86FC"

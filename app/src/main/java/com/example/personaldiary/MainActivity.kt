@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnNotes: Button
     private lateinit var btnNew: Button
     private lateinit var recyclerViewEntries: RecyclerView
-    private lateinit var tvCollectionInfo: TextView
 
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseRef: DatabaseReference
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         val text: String
     )
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         if (currentCollection != "dates") {
             currentCollection = "dates"
             loadEntries()
-            updateCollectionInfo()
         }
     }
 
@@ -74,19 +71,9 @@ class MainActivity : AppCompatActivity() {
         if (currentCollection != "notes") {
             currentCollection = "notes"
             loadEntries()
-            updateCollectionInfo()
         }
     }
 
-    private fun updateCollectionInfo() {
-        val collectionName = when (currentCollection) {
-            "dates" -> "Дневник"
-            "notes" -> "Заметки"
-            else -> currentCollection
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
     private fun loadEntries() {
         databaseRef.child(currentCollection).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
